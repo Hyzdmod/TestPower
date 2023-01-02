@@ -1722,12 +1722,11 @@ const sendMsg = await conn.sendMessage(from, buttonNya)
 break
 case 'play':{
 if (!text) return reply(`Ej : ${prefix+command} Joji - Ew`)
-axios.get(`https://api.lolhuman.xyz/api/ytsearch?apikey=${apikey}&query=${q}`)
-.then(({ dato }) => {
 let search = await yts(text)
 url = search.videos[0].url
 let anu = search.videos[Math.floor(Math.random() * search.videos.length)]
 eek = await getBuffer(search.videos[0].thumbnail)
+axios.get(`https://api.lolhuman.xyz/api/ytsearch?apikey=${apikey}&query=${q}`).then(({ dato }) => {
 axios.get(`https://api.lolhuman.xyz/api/ytplay?apikey=BrunoSobrino&query=${text}`).then(({ data }) => {
 let k = data.result
 owned = '5493865402608@s.whatsapp.net'
