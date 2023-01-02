@@ -1726,7 +1726,7 @@ let search = await yts(text)
 url = search.videos[0].url
 let anu = search.videos[Math.floor(Math.random() * search.videos.length)]
 eek = await getBuffer(search.videos[0].thumbnail)
-axios.get(`https://api.lolhuman.xyz/api/ytsearch?apikey=${apikey}&query=${q}`).then(({ data }) => {
+axios.get(`https://api.lolhuman.xyz/api/ytsearch?apikey=${apikey}&query=${text}`).then(({ data }) => {
 axios.get(`https://api.lolhuman.xyz/api/ytplay?apikey=BrunoSobrino&query=${text}`).then(({ data }) => {
 let k = data.result
 owned = '5493865402608@s.whatsapp.net'
@@ -1758,7 +1758,7 @@ ${k.description}
 `
 let buttonse = [
 {buttonId: `${prefix}mp4 ${url}`, buttonText: {displayText: `𝐕𝐢𝐝𝐞𝐨`}, type: 1},
-{buttonId: `${prefix}mp3 https://www.youtube.com/watch?v=${data.result[0].videoId}`, buttonText: {displayText: `𝐀𝐮𝐝𝐢𝐨`}, type: 1}
+{buttonId: `${prefix}mp33 ${k.audio.link}`, buttonText: {displayText: `𝐀𝐮𝐝𝐢𝐨`}, type: 1}
 ]
 let buttonMessages = {
 document: fs.readFileSync('./media/fake.txt'),
@@ -1785,19 +1785,23 @@ conn.sendMessage(m.chat, buttonMessages, { quoted: m})
 }
 break
 case 'play2':
-			if (args.length == 0) return await reply(`Ej: ${prefix + command} Joji - Ew`)
-			axios
-				.get(`https://api.lolhuman.xyz/api/ytsearch?apikey=${apikey}&query=${q}`)
-				.then(({ data }) => {
-					axios.get(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${apikey}&url=https://www.youtube.com/watch?v=${data.result[0].videoId}`).then(({ data }) => {
-						var caption = `❖ Titulo    : *${data.result.title}*\n`
-						caption += `❖ Peso     : *${data.result.size}*`
-						conn.sendMessage(from, { image: { url: data.result.thumbnail }, caption })
-							conn.sendMessage(from, { audio: { url: data.result.link }, mimetype: 'audio/mp4', fileName: `${data.result.title}.mp3` })
-						})
-				})
-				.catch(console.error)
-			break
+if (args.length == 0) return await reply(`Ej: ${prefix + command} Joji - Ew`)
+axios
+.get(`https://api.lolhuman.xyz/api/ytsearch?apikey=${apikey}&query=${q}`)
+.then(({ data }) => {
+axios.get(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${apikey}&url=https://www.youtube.com/watch?v=${data.result[0].videoId}`).then(({ data }) => {
+var caption = `❖ Titulo    : *${data.result.title}*\n`
+caption += `❖ Peso     : *${data.result.size}*`
+conn.sendMessage(from, { image: { url: data.result.thumbnail }, caption })
+conn.sendMessage(from, { audio: { url: data.result.link }, mimetype: 'audio/mp4', fileName: `${data.result.title}.mp3` })
+})
+})
+.catch(console.error)
+break
+case 'mp33':
+conn.sendMessage(from, { audio: { url: text }, mimetype: 'audio/mp4', fileName: `power.mp3` })
+break
+
 		case 'ytmp3': case 'mp3':
 			if (args.length == 0) return reply(`Ej: ${prefix + command} link de YouTube `)
 			axios
