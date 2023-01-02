@@ -1726,7 +1726,7 @@ let search = await yts(text)
 url = search.videos[0].url
 let anu = search.videos[Math.floor(Math.random() * search.videos.length)]
 eek = await getBuffer(search.videos[0].thumbnail)
-axios.get(`https://api.lolhuman.xyz/api/ytsearch?apikey=${apikey}&query=${q}`).then(({ dato }) => {
+axios.get(`https://api.lolhuman.xyz/api/ytsearch?apikey=${apikey}&query=${q}`).then(({ data }) => {
 axios.get(`https://api.lolhuman.xyz/api/ytplay?apikey=BrunoSobrino&query=${text}`).then(({ data }) => {
 let k = data.result
 owned = '5493865402608@s.whatsapp.net'
@@ -1758,7 +1758,7 @@ ${k.description}
 `
 let buttonse = [
 {buttonId: `${prefix}mp4 ${url}`, buttonText: {displayText: `𝐕𝐢𝐝𝐞𝐨`}, type: 1},
-{buttonId: `${prefix}mp3 https://www.youtube.com/watch?v=${dato.result[0].videoId}`, buttonText: {displayText: `𝐀𝐮𝐝𝐢𝐨`}, type: 1}
+{buttonId: `${prefix}mp3 https://www.youtube.com/watch?v=${data.result[0].videoId}`, buttonText: {displayText: `𝐀𝐮𝐝𝐢𝐨`}, type: 1}
 ]
 let buttonMessages = {
 document: fs.readFileSync('./media/fake.txt'),
