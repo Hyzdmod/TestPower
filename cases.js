@@ -1783,22 +1783,39 @@ conn.sendMessage(m.chat, buttonMessages, { quoted: m})
 })
 }
 break
-case 'ytmp4': case 'mp4': case 'ytv': {
-  let { ytv } = require('./lib/y2mate')
-  if (!q) return m.reply(`Introduzca el link!!!`)
-  //if (!isUrl(q)) return m.reply('Link Invalido ')
-  if (!q.includes('youtube')/('youtu.be')) return m.reply('Link Invalido ')
-  let quality = args[1] ? args[1] : '360p'
-  let media = await ytv(q, quality)
-  if (media.filesize >= 100000) return
-  conn.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4` }, { quoted: m })
-  }
-  break
-case 'ytmp3': case 'mp3':{
-if (!text) return reply('Introduzca el link!!!')
-downloadMp3(text)
-}
-break
+case 'play2':
+			if (args.length == 0) return await reply(`Ej: ${prefix + command} Joji - Ew`)
+			axios
+				.get(`https://api.lolhuman.xyz/api/ytsearch?apikey=${apikey}&query=${full_args}`)
+				.then(({ data }) => {
+					axios.get(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${apikey}&url=https://www.youtube.com/watch?v=${data.result[0].videoId}`).then(({ data }) => {
+						var caption = `❖ Titulo    : *${data.result.title}*\n`
+						caption += `❖ Peso     : *${data.result.size}*`
+						conn.sendMessage(from, { image: { url: data.result.thumbnail }, caption }).then(() => {
+							conn.sendMessage(from, { audio: { url: data.result.link }, mimetype: 'audio/mp4', fileName: `${data.result.title}.mp3` })
+						})
+					})
+				})
+				.catch(console.error)
+			break
+		case 'ytmp3': case 'mp3':
+			if (args.length == 0) return reply(`Ej: ${prefix + command} link de YouTube `)
+			axios
+				.get(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${apikey}&url=${args[0]}`)
+				.then(({ data }) => {
+						conn.sendMessage(from, { audio: { url: data.result.link }, mimetype: 'audio/mp4', fileName: `${data.result.title}.mp3` })
+					})
+				.catch(console.error)
+			break
+		case 'ytmp4': case 'mp4':
+			if (args.length == 0) return reply(`Example: ${prefix + command} https://www.youtube.com/watch?v=qZIQAk-BUEc`)
+			axios
+				.get(`https://api.lolhuman.xyz/api/ytvideo2?apikey=${apikey}&url=${args[0]}`)
+				.then(({ data }) => {
+						conn.sendMessage(from, { video: { url: data.result.link }, mimetype: 'video/mp4', fileName: `${data.result.title}.mp4` })
+					})
+				.catch(console.error)
+			break
 case 'addprem':
 if (!itsMeHyzd) return reply(mess.owner)
 if (!args[0]) return reply(`Usa: ${prefix+command} numero\nEj: ${prefix+command} 5493865362492`)
