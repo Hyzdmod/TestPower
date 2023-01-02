@@ -1798,8 +1798,9 @@ conn.sendMessage(from, { audio: { url: data.result.link }, mimetype: 'audio/mp4'
 })
 .catch(console.error)
 break
-case 'mp33':
-conn.sendMessage(from, { audio: { url: text }, mimetype: 'audio/mp4', fileName: `power.mp3` })
+case 'mp33': {
+conn.sendMessage(from, { audio: { url: `${text}` }, mimetype: 'audio/mp4', fileName: `power.mp3` })
+}
 break
 
 		case 'ytmp3': case 'mp3':
