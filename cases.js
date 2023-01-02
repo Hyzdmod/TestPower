@@ -1758,7 +1758,7 @@ ${k.description}
 `
 let buttonse = [
 {buttonId: `${prefix}mp4 ${url}`, buttonText: {displayText: `𝐕𝐢𝐝𝐞𝐨`}, type: 1},
-{buttonId: `${prefix}mp3 ${url}`, buttonText: {displayText: `𝐀𝐮𝐝𝐢𝐨`}, type: 1}
+{buttonId: `${prefix}mp3 https://www.youtube.com/watch?v=${k.videoId}`, buttonText: {displayText: `𝐀𝐮𝐝𝐢𝐨`}, type: 1}
 ]
 let buttonMessages = {
 document: fs.readFileSync('./media/fake.txt'),
@@ -1791,10 +1791,9 @@ case 'play2':
 					axios.get(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${apikey}&url=https://www.youtube.com/watch?v=${data.result[0].videoId}`).then(({ data }) => {
 						var caption = `❖ Titulo    : *${data.result.title}*\n`
 						caption += `❖ Peso     : *${data.result.size}*`
-						conn.sendMessage(from, { image: { url: data.result.thumbnail }, caption }).then(() => {
+						conn.sendMessage(from, { image: { url: data.result.thumbnail }, caption })
 							conn.sendMessage(from, { audio: { url: data.result.link }, mimetype: 'audio/mp4', fileName: `${data.result.title}.mp3` })
 						})
-					})
 				})
 				.catch(console.error)
 			break
