@@ -1722,7 +1722,8 @@ const sendMsg = await conn.sendMessage(from, buttonNya)
 break
 case 'play':{
 if (!text) return reply(`Ej : ${prefix+command} Joji - Ew`)
-
+axios.get(`https://api.lolhuman.xyz/api/ytsearch?apikey=${apikey}&query=${q}`)
+.then(({ dato }) => {
 let search = await yts(text)
 url = search.videos[0].url
 let anu = search.videos[Math.floor(Math.random() * search.videos.length)]
@@ -1758,7 +1759,7 @@ ${k.description}
 `
 let buttonse = [
 {buttonId: `${prefix}mp4 ${url}`, buttonText: {displayText: `𝐕𝐢𝐝𝐞𝐨`}, type: 1},
-{buttonId: `${prefix}mp3 https://www.youtube.com/watch?v=${k.videoId}`, buttonText: {displayText: `𝐀𝐮𝐝𝐢𝐨`}, type: 1}
+{buttonId: `${prefix}mp3 https://www.youtube.com/watch?v=${dato.result[0].videoId}`, buttonText: {displayText: `𝐀𝐮𝐝𝐢𝐨`}, type: 1}
 ]
 let buttonMessages = {
 document: fs.readFileSync('./media/fake.txt'),
@@ -1781,12 +1782,13 @@ thumbnail: eek,
 }}}
 conn.sendMessage(m.chat, buttonMessages, { quoted: m})
 })
+})
 }
 break
 case 'play2':
 			if (args.length == 0) return await reply(`Ej: ${prefix + command} Joji - Ew`)
 			axios
-				.get(`https://api.lolhuman.xyz/api/ytsearch?apikey=${apikey}&query=${full_args}`)
+				.get(`https://api.lolhuman.xyz/api/ytsearch?apikey=${apikey}&query=${q}`)
 				.then(({ data }) => {
 					axios.get(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${apikey}&url=https://www.youtube.com/watch?v=${data.result[0].videoId}`).then(({ data }) => {
 						var caption = `❖ Titulo    : *${data.result.title}*\n`
